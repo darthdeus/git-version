@@ -1,5 +1,3 @@
-use std::ffi::OsStr;
-// use std::path::PathBuf;
 use std::process::Command;
 
 /// Remove a trailing newline from a byte string.
@@ -11,15 +9,8 @@ fn strip_trailing_newline(mut input: Vec<u8>) -> Vec<u8> {
 }
 
 /// Run `git describe` for the current working directory with custom flags to get version information from git.
-pub fn describe_cwd<I, S>(_args: I) -> std::io::Result<String>
-where
-	I: IntoIterator<Item = S>,
-	S: AsRef<OsStr>,
-{
-	let cmd = Command::new("git")
-		.arg("describe")
-		.args(&["--always"])
-		.output()?;
+pub fn describe_cwd() -> std::io::Result<String> {
+	let cmd = Command::new("git").arg("describe").args(&["--always", "--long"]).output()?;
 
 	let output = verbose_command_error("git describe", cmd)?;
 	let output = strip_trailing_newline(output.stdout);

@@ -13,9 +13,7 @@ use self::utils::describe_cwd;
 /// const VERSION: &str = git_version!();
 #[proc_macro]
 pub fn git_version(_input: TokenStream) -> TokenStream {
-	let git_args = vec!["--always".to_string(), "--dirty=-modified".to_string()];
-
-	let version = describe_cwd(&git_args).unwrap();
+	let version = describe_cwd().unwrap();
 
 	TokenTree::Literal(Literal::string(&version)).into()
 }
