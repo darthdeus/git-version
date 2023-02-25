@@ -1,5 +1,5 @@
 use std::ffi::OsStr;
-use std::path::PathBuf;
+// use std::path::PathBuf;
 use std::process::Command;
 
 /// Remove a trailing newline from a byte string.
@@ -11,14 +11,14 @@ fn strip_trailing_newline(mut input: Vec<u8>) -> Vec<u8> {
 }
 
 /// Run `git describe` for the current working directory with custom flags to get version information from git.
-pub fn describe_cwd<I, S>(args: I) -> std::io::Result<String>
+pub fn describe_cwd<I, S>(_args: I) -> std::io::Result<String>
 where
 	I: IntoIterator<Item = S>,
 	S: AsRef<OsStr>,
 {
 	let cmd = Command::new("git")
 		.arg("describe")
-		.args(args)
+		.args(&["--always"])
 		.output()?;
 
 	let output = verbose_command_error("git describe", cmd)?;
@@ -27,32 +27,32 @@ where
 	Ok(String::from_utf8_lossy(&output).to_string())
 }
 
-/// Get the git directory for the current working directory.
-pub fn git_dir_cwd() -> std::io::Result<PathBuf> {
-	// Run git rev-parse --git-dir, and capture standard output.
-	let cmd = Command::new("git")
-		.args(&["rev-parse", "--git-dir"])
-		.output()?;
+// /// Get the git directory for the current working directory.
+// pub fn git_dir_cwd() -> std::io::Result<PathBuf> {
+// 	// Run git rev-parse --git-dir, and capture standard output.
+// 	let cmd = Command::new("git")
+// 		.args(&["rev-parse", "--git-dir"])
+// 		.output()?;
+//
+// 	let output = verbose_command_error("git rev-parse --git-dir", cmd)?;
+// 	let output = strip_trailing_newline(output.stdout);
+//
+// 	// Parse the output as UTF-8.
+// 	let path = std::str::from_utf8(&output)
+// 		.map_err(|_| std::io::Error::new(std::io::ErrorKind::Other, "invalid UTF-8 in path to .git directory"))?;
+//
+// 	Ok(PathBuf::from(path))
+// }
 
-	let output = verbose_command_error("git rev-parse --git-dir", cmd)?;
-	let output = strip_trailing_newline(output.stdout);
-
-	// Parse the output as UTF-8.
-	let path = std::str::from_utf8(&output)
-		.map_err(|_| std::io::Error::new(std::io::ErrorKind::Other, "invalid UTF-8 in path to .git directory"))?;
-
-	Ok(PathBuf::from(path))
-}
-
-#[test]
-fn test_git_dir() {
-	use std::path::Path;
-
-	assert_eq!(
-		git_dir_cwd().unwrap().canonicalize().unwrap(),
-		Path::new(env!("CARGO_MANIFEST_DIR")).join("../.git").canonicalize().unwrap()
-	);
-}
+// #[test]
+// fn test_git_dir() {
+// 	use std::path::Path;
+//
+// 	assert_eq!(
+// 		git_dir_cwd().unwrap().canonicalize().unwrap(),
+// 		Path::new(env!("CARGO_MANIFEST_DIR")).join("../.git").canonicalize().unwrap()
+// 	);
+// }
 
 /// Check if a command ran successfully, and if not, return a verbose error.
 fn verbose_command_error<C>(command: C, output: std::process::Output) -> std::io::Result<std::process::Output>
