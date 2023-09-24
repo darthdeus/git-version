@@ -20,4 +20,4 @@ readme = "README.md"
 comfy-git-version-macro = { version = "=0.3.5", path = "comfy-git-version-macro" }
 
 [workspace]
-members = ["git-version-macro"]
+members = ["comfy-git-version-macro"]
