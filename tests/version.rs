@@ -1,4 +1,4 @@
-use git_version::{git_describe, git_version};
+use comfy_git_version::git_version;
 
 #[test]
 fn git_describe_is_right() {

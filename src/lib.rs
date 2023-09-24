@@ -3,7 +3,7 @@
 //! Embed git information in your code at compile-time.
 //!
 //! ```
-//! use git_version::git_version;
+//! use comfy_git_version::git_version;
 //! const GIT_VERSION: &str = git_version!();
 //! ```
 //!
@@ -22,6 +22,6 @@ pub use git_version_macro::git_version;
 #[macro_export]
 macro_rules! git_describe {
 	($($args:tt)*) => {
-		$crate::git_version!(args = [$($args)*])
+		$crate::comfy_git_version!(args = [$($args)*])
 	};
 }
