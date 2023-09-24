@@ -1,10 +1,11 @@
 [package]
-name = "git-version-macro"
+name = "comfy-git-version-macro"
 version = "0.3.5"
 authors = [
-	"David Roundy <daveroundy@gmail.com>",
-	"Maarten de Vries <maarten@de-vri.es>",
-	"Mara Bos <m-ou.se@m-ou.se>",
+  "Jakub Arnold <darthdeus@gmail.com>",
+  "David Roundy <daveroundy@gmail.com>",
+  "Maarten de Vries <maarten@de-vri.es>",
+  "Mara Bos <m-ou.se@m-ou.se>",
 ]
 edition = "2018"
 description = "Internal macro crate for git-version."
